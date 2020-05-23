@@ -12,7 +12,7 @@ func Clone(ori []MyInt) []MyInt {
 }
 
 // Clone2 clone a slice using `make` and `copy`.
-// if ori is nil, return a non-nil slice.
+// if ori is nil, returns a non-nil slice.
 func Clone2(ori []MyInt) []MyInt {
 	oriClone := make([]MyInt, len(ori))
 	copy(oriClone, ori)
@@ -20,6 +20,7 @@ func Clone2(ori []MyInt) []MyInt {
 }
 
 // Clone3 clone a slice using `append`.
+// returns nil even if the source slice a is a non-nil blank slice.
 func Clone3(ori []MyInt) []MyInt {
 	oriClone := append([]MyInt(nil), ori...)
 	return oriClone

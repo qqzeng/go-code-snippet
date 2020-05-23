@@ -9,7 +9,7 @@ import (
 // Test cases to explore the effeiciency comparision of
 // range operation between Array, Slice and Pointer of Array.
 
-// printSeperateLine print a speperated line with the given title
+// printSeperateLine prints a speperated line with the given title.
 func printSeperateLine(title string) {
 	const kwidth = 20
 	// fmt.Println(strings.Repeat("-", kwidth) + title + strings.Repeat("-", kwidth))
@@ -57,8 +57,8 @@ func TestRangeOfContainer(t *testing.T) {
 		fmt.Println("persons:", &persons)
 	})
 
-	printSeperateLine("TestROC3-1")
-	t.Run("TestROC3-1", func(t *testing.T) {
+	printSeperateLine("TestROC4")
+	t.Run("TestROC4", func(t *testing.T) {
 		type Person struct {
 			name string
 			age  MyInt
@@ -75,8 +75,8 @@ func TestRangeOfContainer(t *testing.T) {
 		fmt.Println("persons:", &persons)
 	})
 
-	printSeperateLine("TestROC4")
-	t.Run("TestROC4", func(t *testing.T) {
+	printSeperateLine("TestROC5")
+	t.Run("TestROC5", func(t *testing.T) {
 		type Person struct {
 			name string
 			age  MyInt
@@ -123,8 +123,9 @@ func BenchmarkRangeOfArray(b *testing.B) {
 
 	b.Run("BenchmarkROA3", func(b *testing.B) {
 		arr := [arraySize][arrayD2Size]MyInt{}
+		sarr := arr[:]
 		for i := 0; i < b.N; i++ {
-			for i, v := range arr[:] {
+			for i, v := range sarr {
 				_, _ = i, v
 			}
 		}
@@ -139,7 +140,7 @@ func BenchmarkRangeOfArray(b *testing.B) {
 		}
 	})
 
-	b.Run("BenchmarkROA4", func(b *testing.B) {
+	b.Run("BenchmarkROA5", func(b *testing.B) {
 		arr := [arraySize][arrayD2Size]MyInt{}
 		for i := 0; i < b.N; i++ {
 			for j := 0; j < len(arr); j++ {
@@ -206,7 +207,7 @@ func memsetLoop(s []MyInt, v MyInt) {
 func BenchmarkClearSlice(b *testing.B) {
 	for j := 0; initExp+j*incrUint < expLimit; j++ {
 		sliceSize := 1 << uint(initExp+j*incrUint)
-		b.Run("BenchmarkCS"+strconv.Itoa(j), func(b *testing.B) {
+		b.Run("BenchmarkCS-1-"+strconv.Itoa(sliceSize), func(b *testing.B) {
 			sli := make([]MyInt, sliceSize)
 			b.ResetTimer()
 			for i := 0; i < b.N; i++ {
@@ -214,7 +215,7 @@ func BenchmarkClearSlice(b *testing.B) {
 			}
 		})
 
-		b.Run("BenchmarkCS"+strconv.Itoa(j), func(b *testing.B) {
+		b.Run("BenchmarkCS-2-"+strconv.Itoa(sliceSize), func(b *testing.B) {
 			sli := make([]MyInt, sliceSize)
 			b.ResetTimer()
 			for i := 0; i < b.N; i++ {
@@ -225,23 +226,23 @@ func BenchmarkClearSlice(b *testing.B) {
 }
 
 // Shallow benchmark used to demostrate the effeciency comparision between Array and Slice.
-func BenchmarkSlice(b *testing.B) {
+func BenchmarkBasicSlice(b *testing.B) {
 	const incrUint = 3
 	const expLimit = 28
 	for j := 0; initExp+j*incrUint < expLimit; j++ {
 		sliceSize := 1 << uint(initExp+j*incrUint)
 		b.Run("BenchmarkS-"+strconv.Itoa(sliceSize), func(b *testing.B) {
 			for i := 0; i < b.N; i++ {
-				s := make([]int, sliceSize)
+				s := make([]MyInt, sliceSize)
 				for i, v := range s {
-					s[i] = 1 + i
+					s[i] = MyInt(1 + i)
 					_ = v
 				}
 			}
 		})
 	}
 }
-func BenchmarkArray(b *testing.B) {
+func BenchmarkBasicArray(b *testing.B) {
 	const incrUint = 3
 	const (
 		arraySize6  = 1 << 6
