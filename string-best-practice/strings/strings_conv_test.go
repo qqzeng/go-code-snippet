@@ -271,3 +271,9 @@ func BenchmarkBuildString_Builder(b *testing.B) {
 		}
 	})
 }
+
+func TestMap(t *testing.T) {
+	m := make(map[int]int, 0)
+	m[0] = 1
+	fmt.Println(m)
+}
