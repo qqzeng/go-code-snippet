@@ -4,7 +4,6 @@ import (
 	"time"
 
 	"github.com/qqzeng/gorm-practice-tips/batchinsert/proto"
-
 	"gorm.io/gorm"
 )
 

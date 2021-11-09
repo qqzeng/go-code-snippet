@@ -5,8 +5,7 @@ import (
 	"fmt"
 	"strings"
 
-	"git.woa.com/bigfishchen/go-toolkit/pkg/convert"
-	"git.woa.com/bigfishchen/go-toolkit/pkg/types"
+	"github.com/qqzeng/gorm-practice-tips/batchinsert/pkg/convert"
 	"github.com/qqzeng/gorm-practice-tips/batchinsert/proto"
 )
 
@@ -34,7 +33,7 @@ type InMatch struct {
 // Query ...
 type Query struct {
 	// Matches defines how to match values.
-	Matches types.StringAnyMap
+	Matches map[string]interface{}
 }
 
 // CommonParams ...
